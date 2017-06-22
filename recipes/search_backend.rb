@@ -18,7 +18,7 @@ chef_backend node['fqdn'] do
   chef_backend_secrets delivery_databag['search_secrets'].to_s unless node['fqdn'] == node['search_bootrap']
 end
 
-ruby_block 'add automate password to databag' do
+ruby_block 'add search secrets to databag' do
   block do
     delivery_databag['search_secrets'] = ::File.read('/etc/chef-backend/chef-backend-secrets.json')
 
