@@ -5,7 +5,7 @@
 # Copyright:: 2017, The Authors, All Rights Reserved.
 delivery_databag = data_bag_item('automate', 'automate')
 
-search_bootstrap = search(:node, "chef_environment:#{node.chef_environment} AND es_bootstrap: true",
+search_bootstrap = search(:node, "chef_environment:#{node.chef_environment} AND es_bootstrap:true",
                                filter_result: { 'fqdn' => ['fqdn'] })
 
 # if search_bootstrap has no results, you are the search_bootstrap
