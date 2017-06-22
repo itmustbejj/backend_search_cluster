@@ -12,19 +12,10 @@ search_bootstrap = search(:node, "chef_environment:#{node.chef_environment} AND 
 search_bootstrap_fqdn = search_bootstrap.empty? ? node['fqdn'] : search_bootstrap[0]['fqdn']
 
 chef_backend node['fqdn'] do
-  bootstrap_node search_bootstrap_fqdn
+  bootstrap_node node['search_bootstrap']
   accept_license true
   publish_address node['ipaddress']
-  chef_backend_secrets search_secrets['content'].to_s unless search_bootstrap.empty?
-end
-
-ruby_block 'gather search secrets' do
-  block do
-    content_value = { 'content' => File.read('/etc/chef-backend/chef-backend-secrets.json') }
-    write_env_secret('search_secrets', content_value)
-  end
-  action :run
-  only_if { node['chef_stack']['is_backend_bootstrap'] }
+  chef_backend_secrets delivery_databag['search_secrets'].to_s unless node['fqdn'] == node['search_bootrap']
 end
 
 ruby_block 'add automate password to databag' do
@@ -40,4 +31,5 @@ ruby_block 'add automate password to databag' do
     @chef_rest.put('data/automate/automate', delivery_databag)
   end
   action :nothing
+  only_if { node['fqdn'] == node['search_bootstrap'] }
 end
