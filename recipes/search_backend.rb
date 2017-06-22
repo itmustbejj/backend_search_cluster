@@ -5,6 +5,10 @@
 # Copyright:: 2017, The Authors, All Rights Reserved.
 delivery_databag = data_bag_item('automate', 'automate')
 
+file '/tmp/delivery.pem' do
+  content delivery_databag['user_pem']
+end
+
 chef_backend node['fqdn'] do
   bootstrap_node node['search_bootstrap']
   accept_license true
