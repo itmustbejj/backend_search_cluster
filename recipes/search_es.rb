@@ -20,7 +20,7 @@ end
 elasticsearch_config = {
   'node.name' => node['hostname'],
   'discovery.zen.ping.unicast.hosts' => node['peers'],  # TODO  prefer to pass explicit list of hosts?
-  'network.host' => get_es_ip,
+  'network.host' => node['ipaddress'],
 }
 
 elasticsearch_install 'elasticsearch' do
