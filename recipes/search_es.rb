@@ -64,10 +64,10 @@ elasticsearch_service 'elasticsearch' do
   action :nothing
 end
 
-template '/usr/lib/systemd/system/elasticsearch.service' do  # TODO?
+template '/usr/lib/systemd/system/elasticsearch.service' do
   owner 'root'
   mode '0644'
-  source 'systemd_unit.erb'  #TODO?
+  source 'systemd_unit.erb'
   variables(
     # we need to include something about #{progname} fixed in here.
     program_name: 'elasticsearch',
