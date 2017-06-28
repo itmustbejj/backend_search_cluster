@@ -60,6 +60,10 @@ elasticsearch_configure 'elasticsearch' do
   notifies :restart, "service[elasticsearch]", :delayed
 end
 
+link '/etc/sysconfig/elasticsearch' do
+  to '/opt/elasticsearch/elastichsearch'
+end
+
 elasticsearch_service 'elasticsearch' do
   action :nothing
 end
