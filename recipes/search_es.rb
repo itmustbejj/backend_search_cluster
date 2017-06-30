@@ -20,6 +20,7 @@ end
 elasticsearch_config = {
   'node.name' => node['hostname'],
   'discovery.zen.ping.unicast.hosts' => node['peers'],  # TODO  prefer to pass explicit list of hosts?
+  'discovery.zen.minimum_master_nodes' => node['peers'].count,
   'network.host' => node['ipaddress'],
 }
 
