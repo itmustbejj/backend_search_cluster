@@ -62,9 +62,11 @@ elasticsearch_configure 'elasticsearch' do
   notifies :restart, "service[elasticsearch]", :delayed
 end
 
-directory "/opt/elasticsearch/plugins/cloud-aws" do
-  owner "elasticsearch"
-  group "elasticsearch"
+%w(/opt/elasticsearch/plugins /opt/elasticsearch/plugins/cloud-aws).each do | dir |
+  directory dir do
+    owner "elasticsearch"
+    group "elasticsearch"
+  end
 end
 
 remote_file "cloud-aws-2.4.1.zip" do
