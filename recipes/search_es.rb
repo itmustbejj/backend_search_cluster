@@ -63,12 +63,6 @@ elasticsearch_configure 'elasticsearch' do
   notifies :restart, "service[elasticsearch]", :delayed
 end
 
-#compile time template source override
-edit_resource(:template, 'logging.yml') do
-  source 'logging.yml.erb'
-  cookbook 'elasticsearch'
-end
-
 directory "/opt/elasticsearch/plugins/cloud-aws" do
   owner "elasticsearch"
   group "elasticsearch"
