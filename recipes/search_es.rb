@@ -64,10 +64,10 @@ elasticsearch_configure 'elasticsearch' do
 end
 
 #compile time template source override
-edit_resource(:template, 'logging.yml') do
-  source 'logging.yml.erb'
-  cookbook cookbook_name
-end
+#edit_resource(:template, 'logging.yml') do
+#  source 'logging.yml.erb'
+#  cookbook cookbook_name
+#end
 
 directory "/opt/elasticsearch/plugins/cloud-aws" do
   owner "elasticsearch"
