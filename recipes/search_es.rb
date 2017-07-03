@@ -64,7 +64,7 @@ elasticsearch_configure 'elasticsearch' do
 end
 
 #compile time template source override
-edit_resource!(:template, 'logging.yml') do
+edit_resource(:template, 'logging.yml') do
   source 'logging.yml.erb'
   cookbook 'elasticsearch'
 end
