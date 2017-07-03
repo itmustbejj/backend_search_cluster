@@ -76,7 +76,7 @@ end
 
 remote_file "cloud-aws-2.4.1.zip" do
   source "https://download.elastic.co/elasticsearch/release/org/elasticsearch/plugin/cloud-aws/2.4.1/cloud-aws-2.4.1.zip"
-  destination "/tmp/cloud-aws-2.4.1.zip"
+  path "/tmp/cloud-aws-2.4.1.zip"
   notifies 'execute[unzip cloud-aws]', :delayed
 end
 
