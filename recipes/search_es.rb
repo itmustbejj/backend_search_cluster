@@ -18,12 +18,11 @@ directory '/var/run/elasticsearch' do
 end
 
 elasticsearch_config = {
+  'cluster.name' => node['elasticsearch']['cluster_name'] || 'elasticsearch'
   'node.name' => node['hostname'],
   'network.host' => node['ipaddress'],
   'discovery.type' => 'ec2',
   'cloud.aws.region' => node['aws']['region'],
-  'cloud.aws.access_key' => node['aws']['access_key'],
-  'cloud.aws.secret_key' => node['aws']['secret_key'],
 }
 
 elasticsearch_install 'elasticsearch' do
