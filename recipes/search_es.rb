@@ -10,6 +10,12 @@ include_recipe 'java'
 
 elasticsearch_user 'elasticsearch'
 
+#compile time template source override
+edit_resource(:template, 'logging.yml.erb') do
+  source 'logging.yml.erb'
+  cookbook cookbook_name
+end
+
 directory '/var/run/elasticsearch' do
   action :create
   recursive true
