@@ -10,12 +10,6 @@ include_recipe 'java'
 
 elasticsearch_user 'elasticsearch'
 
-#compile time template source override
-edit_resource(:template, 'logging.yml') do
-  source 'logging.yml.erb'
-  cookbook cookbook_name
-end
-
 directory '/var/run/elasticsearch' do
   action :create
   recursive true
@@ -67,6 +61,28 @@ elasticsearch_configure 'elasticsearch' do
   configuration elasticsearch_config
   action :manage
   notifies :restart, "service[elasticsearch]", :delayed
+end
+
+#compile time template source override
+edit_resource(:template, 'logging.yml') do
+  source 'logging.yml.erb'
+  cookbook cookbook_name
+end
+
+directory "/opt/elasticsearch/plugins/cloud-aws" do
+  owner "elasticsearch"
+  group "elasticsearch"
+end
+
+remote_file "cloud-aws-2.4.1.zip" do
+  source "https://download.elastic.co/elasticsearch/release/org/elasticsearch/plugin/cloud-aws/2.4.1/cloud-aws-2.4.1.zip"
+  destination "/tmp/cloud-aws-2.4.1.zip"
+  notifies 'execute[unzip cloud-aws]', :delayed
+end
+
+execute "unzip cloud-aws" do
+  command "unzip /tmp/cloud-aws-2.4.1.zip -d /opt/elasticsearch/plugins/cloud-aws"
+  action :nothing
 end
 
 link '/opt/elasticsearch/elasticsearch' do
