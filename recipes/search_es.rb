@@ -18,7 +18,7 @@ directory '/var/run/elasticsearch' do
 end
 
 elasticsearch_config = {
-  'cluster.name' => node['elasticsearch']['cluster_name'] || 'elasticsearch'
+  'cluster.name' => node['elasticsearch']['cluster_name'] || 'elasticsearch',
   'node.name' => node['hostname'],
   'network.host' => node['ipaddress'],
   'discovery.type' => 'ec2',
@@ -28,8 +28,8 @@ elasticsearch_config = {
 elasticsearch_install 'elasticsearch' do
   type :tarball # type of install
   dir tarball: '/opt/' # where to install
-  download_url "https://download.elastic.co/elasticsearch/release/org/elasticsearch/distribution/tar/elasticsearch/2.4.1/elasticsearch-2.4.1.tar.gz"
-  download_checksum "23a369ef42955c19aaaf9e34891eea3a055ed217d7fbe76da0998a7a54bbe167"
+  download_url 'https://download.elastic.co/elasticsearch/release/org/elasticsearch/distribution/tar/elasticsearch/2.4.1/elasticsearch-2.4.1.tar.gz'
+  download_checksum '23a369ef42955c19aaaf9e34891eea3a055ed217d7fbe76da0998a7a54bbe167'
   action :install # could be :remove as well
 end
 
@@ -37,16 +37,16 @@ half_system_ram = (node['memory']['total'].to_i * 0.5).floor / 1024
 
 elasticsearch_configure 'elasticsearch' do
   # if you override one of these, you probably want to override all
-  path_home     tarball: "/opt/elasticsearch"
-  path_conf     tarball: "/etc/elasticsearch"
-  path_data     tarball: "/var/opt/elasticsearch"
-  path_logs     tarball: "/var/log/elasticsearch"
-  path_pid      tarball: "/var/run/elasticsearch"
-  path_plugins  tarball: "/opt/elasticsearch/plugins"
-  path_bin      tarball: "/opt/elasticsearch/bin"
-  logging({:"action" => 'INFO'})
+  path_home     tarball: '/opt/elasticsearch'
+  path_conf     tarball: '/etc/elasticsearch'
+  path_data     tarball: '/var/opt/elasticsearch'
+  path_logs     tarball: '/var/log/elasticsearch'
+  path_pid      tarball: '/var/run/elasticsearch'
+  path_plugins  tarball: '/opt/elasticsearch/plugins'
+  path_bin      tarball: '/opt/elasticsearch/bin'
+  logging(action: 'INFO')
   # allocate half the system ram to the jvm, up to a max up 31GB.
-  allocated_memory = half_system_ram > 30500 ? "30500m" : "#{half_system_ram}m"
+  allocated_memory = half_system_ram > 30500 ? '30500m' : "#{half_system_ram}m"
   thread_stack_size '512k'
   gc_settings <<-CONFIG
               -XX:+UseParNewGC
@@ -59,24 +59,24 @@ elasticsearch_configure 'elasticsearch' do
 
   configuration elasticsearch_config
   action :manage
-  notifies :restart, "service[elasticsearch]", :delayed
+  notifies :restart, 'service[elasticsearch]', :delayed
 end
 
-%w(/opt/elasticsearch/plugins /opt/elasticsearch/plugins/cloud-aws).each do | dir |
+%w(/opt/elasticsearch/plugins /opt/elasticsearch/plugins/cloud-aws).each do |dir|
   directory dir do
-    owner "elasticsearch"
-    group "elasticsearch"
+    owner 'elasticsearch'
+    group 'elasticsearch'
   end
 end
 
-remote_file "cloud-aws-2.4.1.zip" do
-  source "https://download.elastic.co/elasticsearch/release/org/elasticsearch/plugin/cloud-aws/2.4.1/cloud-aws-2.4.1.zip"
-  path "/tmp/cloud-aws-2.4.1.zip"
+remote_file 'cloud-aws-2.4.1.zip' do
+  source 'https://download.elastic.co/elasticsearch/release/org/elasticsearch/plugin/cloud-aws/2.4.1/cloud-aws-2.4.1.zip'
+  path '/tmp/cloud-aws-2.4.1.zip'
   notifies :run, 'execute[unzip cloud-aws]', :immediately
 end
 
-execute "unzip cloud-aws" do
-  command "unzip /tmp/cloud-aws-2.4.1.zip -d /opt/elasticsearch/plugins/cloud-aws"
+execute 'unzip cloud-aws' do
+  command 'unzip /tmp/cloud-aws-2.4.1.zip -d /opt/elasticsearch/plugins/cloud-aws'
   action :nothing
 end
 
@@ -101,7 +101,7 @@ template '/usr/lib/systemd/system/elasticsearch.service' do
     es_group: 'elasticsearch',
     nofile_limit: '65536'
   )
-  notifies :restart, "service[elasticsearch]", :immediately
+  notifies :restart, 'service[elasticsearch]', :immediately
 end
 
 service 'elasticsearch' do
