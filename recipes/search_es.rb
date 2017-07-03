@@ -11,7 +11,7 @@ include_recipe 'java'
 elasticsearch_user 'elasticsearch'
 
 #compile time template source override
-edit_resource(:template, 'logging.yml.erb') do
+edit_resource(:template, 'logging.yml') do
   source 'logging.yml.erb'
   cookbook cookbook_name
 end
@@ -26,6 +26,8 @@ end
 elasticsearch_config = {
   'node.name' => node['hostname'],
   'network.host' => node['ipaddress'],
+  'discover.type' => 'ec2',
+  'aws.region' => node['aws']['region'],
 }
 
 elasticsearch_install 'elasticsearch' do
