@@ -19,9 +19,6 @@ end
 
 elasticsearch_config = {
   'node.name' => node['hostname'],
-#  'discovery.zen.ping.unicast.hosts' => node['peers'],  # TODO  prefer to pass explicit list of hosts?
-  'discovery.zen.minimum_master_nodes' => 3,
-  'discovery.zen.ping.multicast.enabled' => true,
   'network.host' => node['ipaddress'],
 }
 
@@ -62,8 +59,8 @@ elasticsearch_configure 'elasticsearch' do
   notifies :restart, "service[elasticsearch]", :delayed
 end
 
-link '/etc/sysconfig/elasticsearch' do
-  to '/opt/elasticsearch/elastichsearch'
+link '/opt/elasticsearch/elasticsearch' do
+  to '/etc/sysconfig/elasticsearch'
 end
 
 elasticsearch_service 'elasticsearch' do
