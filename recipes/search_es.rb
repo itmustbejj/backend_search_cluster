@@ -26,6 +26,10 @@ end
 elasticsearch_config = {
   'node.name' => node['hostname'],
   'network.host' => node['ipaddress'],
+  'discovery.type' => 'ec2',
+  'cloud.aws.region' => node['aws']['region'],
+  'cloud.aws.access_key' => node['aws']['access_key'],
+  'cloud.aws.secret_key' => node['aws']['secret_key'],
 }
 
 elasticsearch_install 'elasticsearch' do
