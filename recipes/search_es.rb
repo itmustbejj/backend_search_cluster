@@ -45,8 +45,6 @@ elasticsearch_configure 'elasticsearch' do
   path_plugins  tarball: '/opt/elasticsearch/plugins'
   path_bin      tarball: '/opt/elasticsearch/bin'
   logging(action: 'INFO')
-  # allocate half the system ram to the jvm, up to a max up 31GB.
-  allocated_memory = half_system_ram > 30500 ? '30500m' : "#{half_system_ram}m"
   thread_stack_size '512k'
   gc_settings <<-CONFIG
               -XX:+UseParNewGC
