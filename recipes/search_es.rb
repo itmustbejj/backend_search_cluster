@@ -23,7 +23,7 @@ elasticsearch_config = {
   'network.host' => node['ipaddress'],
   'discovery.type' => 'ec2',
   'cloud.aws.region' => node['aws']['region'],
-  'http.max_content_length': '1gb',
+  'http.max_content_length' => '1gb',
 }
 
 elasticsearch_install 'elasticsearch' do
