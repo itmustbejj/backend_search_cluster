@@ -18,11 +18,11 @@ execute 'create multiple logstash processes' do
       cp -r /opt/delivery/sv/logstash/ /opt/delivery/sv/logstash$ii
         cp -r /opt/delivery/embedded/etc/logstash/conf.d /opt/delivery/embedded/etc/logstash/conf.d$ii
         rm /opt/delivery/embedded/etc/logstash/conf.d$ii/10-websocket-output.conf
-        sed -i s/conf\.d(?!$ii)/conf\.d$ii/ /opt/delivery/sv/logstash$ii/run
+        sed -i s/conf\.d\\ /conf\.d$ii / /opt/delivery/sv/logstash$ii/run
         ln -s /opt/delivery/sv/logstash$ii /opt/delivery/service/logstash$ii
         ln -s /opt/delivery/embedded/bin/sv /opt/delivery/init/logstash$ii
         mkdir -p /var/log/delivery/logstash$ii
-        sed -i s/logstash(?!$ii)/logstash$ii/ /opt/delivery/sv/logstash$ii/log/run
+        sed -i s/logstash\\ /logstash$ii / /opt/delivery/sv/logstash$ii/log/run
         automate-ctl start logstash$ii
     done
   EOH
