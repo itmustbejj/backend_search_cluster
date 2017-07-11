@@ -22,7 +22,7 @@ execute 'create multiple logstash processes' do
         ln -s /opt/delivery/sv/logstash$ii /opt/delivery/service/logstash$ii
         ln -s /opt/delivery/embedded/bin/sv /opt/delivery/init/logstash$ii
         mkdir -p /var/log/delivery/logstash$ii
-        sed -i "s/logstash\\ /logstash$ii /" /opt/delivery/sv/logstash$ii/log/run
+        sed -i "s/logstash$/logstash$ii/" /opt/delivery/sv/logstash$ii/log/run
         automate-ctl start logstash$ii
     done
   EOH
