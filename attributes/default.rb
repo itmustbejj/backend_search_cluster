@@ -7,5 +7,5 @@ default['logstash']['workers'] = (node['cpu']['cores'].to_i * 0.75).floor  # log
 default['logstash']['bulk_size'] = '512'
 default['logstash']['total_procs'] = '4'
 
-default['elasticsearch']['es_number_of_shards'] = 3
+default['elasticsearch']['es_number_of_shards'] = 5
 default['elasticsearch']['es_max_content_length'] = "1gb"
