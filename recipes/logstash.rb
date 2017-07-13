@@ -9,6 +9,7 @@ execute 'tune logstash' do
   sed -i s/LS_HEAP_SIZE=[0-9]*m/LS_HEAP_SIZE=#{node['logstash']['heap_size']}/ /opt/delivery/sv/logstash/run
   sed -i s/-w\\ [0-9]*/-w\\ #{node['logstash']['workers']}/ /opt/delivery/sv/logstash/run
   sed -i s/-b\\ [0-9]*/-b\\ #{node['logstash']['bulk_size']}/ /opt/delivery/sv/logstash/run
+  automate-ctl restart logstash
   EOH
 end
 
