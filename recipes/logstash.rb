@@ -45,8 +45,8 @@ end
 ruby_block 'reap extra logstash workers' do
   block do
     logstash_dirs = Dir['/opt/delivery/sv/logstash*']
-    if node['logstash']['total_procs'] < logstash_dirs.length
-      (node['logstash']['total_procs'] + 1..logstash_dirs.length).each do |i|
+    if node['logstash']['total_procs'].to_i < logstash_dirs.length
+      (node['logstash']['total_procs'].to_i + 1..logstash_dirs.length).each do |i|
         system("sudo automate-ctl stop logstash#{i}")
         FileUtils.rm_rf("/opt/delivery/sv/logstash#{i}")
         FileUtils.rm_rf("/opt/delivery/embedded/etc/logstash/conf.d#{i}")
@@ -78,7 +78,7 @@ end
     to '/opt/delivery/embedded/bin/sv'
   end
 
-  directory "/var/log/delviery/logstash#{i}"
+  directory "/var/log/delivery/logstash#{i}"
   ruby_block "create directories for logstash#{i}" do
     block do
       ls_run_file = Chef::Util::FileEdit.new("/opt/delivery/sv/logstash#{i}/run")
