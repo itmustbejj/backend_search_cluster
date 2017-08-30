@@ -39,13 +39,13 @@ half_system_ram = (node['memory']['total'].to_i * 0.5).floor / 1024
 
 elasticsearch_configure 'elasticsearch' do
   # if you override one of these, you probably want to override all
-  path_home     tarball: '/opt/elasticsearch'
-  path_conf     tarball: '/etc/elasticsearch'
-  path_data     tarball: '/var/opt/elasticsearch'
-  path_logs     tarball: '/var/log/elasticsearch'
-  path_pid      tarball: '/var/run/elasticsearch'
-  path_plugins  tarball: '/opt/elasticsearch/plugins'
-  path_bin      tarball: '/opt/elasticsearch/bin'
+  path_home     '/opt/elasticsearch'
+  path_conf     '/etc/elasticsearch'
+  path_data     '/var/opt/elasticsearch'
+  path_logs     '/var/log/elasticsearch'
+  path_pid      '/var/run/elasticsearch'
+  path_plugins  '/opt/elasticsearch/plugins'
+  path_bin      '/opt/elasticsearch/bin'
   logging(action: 'INFO')
   thread_stack_size '512k'
   gc_settings <<-CONFIG
