@@ -30,8 +30,8 @@ elasticsearch_config = {
 elasticsearch_install 'elasticsearch' do
   type :tarball # type of install
   dir tarball: '/opt/' # where to install
-  download_url 'https://download.elastic.co/elasticsearch/release/org/elasticsearch/distribution/tar/elasticsearch/2.4.1/elasticsearch-2.4.1.tar.gz'
-  download_checksum '23a369ef42955c19aaaf9e34891eea3a055ed217d7fbe76da0998a7a54bbe167'
+  download_url 'https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.5.2.tar.gz'
+  download_checksum '0870e2c0c72e6eda976effa07aa1cdd06a9500302320b5c22ed292ce21665bf1'
   action :install # could be :remove as well
 end
 
@@ -62,22 +62,8 @@ elasticsearch_configure 'elasticsearch' do
   notifies :restart, 'service[elasticsearch]', :delayed
 end
 
-%w(/opt/elasticsearch/plugins /opt/elasticsearch/plugins/cloud-aws).each do |dir|
-  directory dir do
-    owner 'elasticsearch'
-    group 'elasticsearch'
-  end
-end
-
-remote_file 'cloud-aws-2.4.1.zip' do
-  source 'https://download.elastic.co/elasticsearch/release/org/elasticsearch/plugin/cloud-aws/2.4.1/cloud-aws-2.4.1.zip'
-  path '/tmp/cloud-aws-2.4.1.zip'
-  notifies :run, 'execute[unzip cloud-aws]', :immediately
-end
-
 execute 'unzip cloud-aws' do
-  command 'unzip /tmp/cloud-aws-2.4.1.zip -d /opt/elasticsearch/plugins/cloud-aws'
-  action :nothing
+  command 'sudo bin/elasticsearch-plugin install discovery-ec2'  #TODO: needs guard
 end
 
 link '/opt/elasticsearch/elasticsearch' do
