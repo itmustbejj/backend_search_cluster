@@ -4,7 +4,7 @@ maintainer_email 'you@example.com'
 license 'All Rights Reserved'
 description 'Installs/Configures backend_search_cluster'
 long_description 'Installs/Configures backend_search_cluster'
-version '0.8.5'
+version '0.8.6'
 chef_version '>= 12.1' if respond_to?(:chef_version)
 
 # The `issues_url` points to the location where issues for this cookbook are

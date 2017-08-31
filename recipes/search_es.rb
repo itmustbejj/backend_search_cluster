@@ -49,6 +49,7 @@ elasticsearch_configure 'elasticsearch' do
   logging(action: 'INFO')
 
   jvm_options %w(
+              -Dlog4j2.disable.jmx=true
               -XX:+UseParNewGC
               -XX:+UseConcMarkSweepGC
               -XX:CMSInitiatingOccupancyFraction=75
