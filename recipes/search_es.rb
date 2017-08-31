@@ -64,7 +64,8 @@ elasticsearch_configure 'elasticsearch' do
 end
 
 execute 'install discovery-ec2 plugin' do
-  command 'sudo /opt/elasticsearch-5.5.2/bin/elasticsearch-plugin install discovery-ec2'  #TODO: needs guard
+  command 'sudo /opt/elasticsearch-5.5.2/bin/elasticsearch-plugin install discovery-ec2' 
+  not_if { ::Dir.exist?('/opt/elasticsearch-5.5.2/plugins/discovery-ec2') }
 end
 
 link '/opt/elasticsearch/elasticsearch' do
