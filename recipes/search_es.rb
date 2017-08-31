@@ -73,8 +73,10 @@ end
 
 elasticsearch_service 'elasticsearch' do
   action :nothing
+  notifies :restart, 'service[elasticsearch]', :immediately
 end
 
+=begin
 template '/usr/lib/systemd/system/elasticsearch.service' do
   owner 'root'
   mode '0644'
@@ -88,8 +90,8 @@ template '/usr/lib/systemd/system/elasticsearch.service' do
     es_group: 'elasticsearch',
     nofile_limit: '65536'
   )
-  notifies :restart, 'service[elasticsearch]', :immediately
 end
+=end
 
 service 'elasticsearch' do
   action [:enable, :start]
