@@ -63,8 +63,8 @@ elasticsearch_configure 'elasticsearch' do
   notifies :restart, 'service[elasticsearch]', :delayed
 end
 
-execute 'unzip cloud-aws' do
-  command 'sudo bin/elasticsearch-plugin install discovery-ec2'  #TODO: needs guard
+execute 'install discovery-ec2 plugin' do
+  command 'sudo /opt/elasticsearch-5.5.2/bin/elasticsearch-plugin install discovery-ec2'  #TODO: needs guard
 end
 
 link '/opt/elasticsearch/elasticsearch' do
