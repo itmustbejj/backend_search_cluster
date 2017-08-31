@@ -47,15 +47,16 @@ elasticsearch_configure 'elasticsearch' do
   path_plugins  '/opt/elasticsearch/plugins'
   path_bin      '/opt/elasticsearch/bin'
   logging(action: 'INFO')
-  thread_stack_size '512k'
-  gc_settings <<-CONFIG
+
+  jvm_options %w(
               -XX:+UseParNewGC
               -XX:+UseConcMarkSweepGC
               -XX:CMSInitiatingOccupancyFraction=75
               -XX:+UseCMSInitiatingOccupancyOnly
               -XX:+HeapDumpOnOutOfMemoryError
               -XX:+PrintGCDetails
-            CONFIG
+              -Xss512k
+  )
 
   configuration elasticsearch_config
   action :manage
