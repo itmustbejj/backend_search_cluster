@@ -71,6 +71,8 @@ end
 
 link '/etc/sysconfig/elasticsearch' do
   to '/etc/default/elasticsearch'
+  owner 'elasticsearch'
+  group 'elasticsearch'
 end
 
 elasticsearch_service 'elasticsearch' do
