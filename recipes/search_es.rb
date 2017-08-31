@@ -68,8 +68,8 @@ execute 'install discovery-ec2 plugin' do
   not_if { ::Dir.exist?('/opt/elasticsearch-5.5.2/plugins/discovery-ec2') }
 end
 
-link '/opt/elasticsearch/elasticsearch' do
-  to '/etc/sysconfig/elasticsearch'
+link '/etc/sysconfig/elasticsearch' do
+  to '/etc/default/elasticsearch'
 end
 
 elasticsearch_service 'elasticsearch' do
