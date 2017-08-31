@@ -24,7 +24,7 @@ elasticsearch_config = {
   'discovery.type' => 'ec2',
   'cloud.aws.region' => node['aws']['region'],
   'http.max_content_length' => node['elasticsearch']['es_max_content_length'],
-  'index.number_of_shards' => node['elasticsearch']['es_number_of_shards']
+  #  'index.number_of_shards' => node['elasticsearch']['es_number_of_shards']  # TODO: Waiting on automate pr #883 to move to delivery.rb
 }
 
 elasticsearch_install 'elasticsearch' do
