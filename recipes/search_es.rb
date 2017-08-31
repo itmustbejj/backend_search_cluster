@@ -73,7 +73,7 @@ link '/opt/elasticsearch/elasticsearch' do
 end
 
 elasticsearch_service 'elasticsearch' do
-  action :nothing
+  action :configure
   notifies :restart, 'service[elasticsearch]', :immediately
 end
 
