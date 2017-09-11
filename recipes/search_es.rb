@@ -67,6 +67,7 @@ end
 execute 'install discovery-ec2 plugin' do
   command 'sudo /opt/elasticsearch-5.5.2/bin/elasticsearch-plugin install discovery-ec2' 
   not_if { ::Dir.exist?('/opt/elasticsearch-5.5.2/plugins/discovery-ec2') }
+  notifies :restart, 'service[elasticsearch]', :delayed
 end
 
 link '/etc/sysconfig/elasticsearch' do
